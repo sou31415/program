@@ -1,0 +1,12 @@
+template = """
+use proconio::input;
+fn main(){
+	input! {
+
+	}
+}
+"""
+[build]
+target-dir = "target"
+[dependencies]
+proconio="0.4.3"
