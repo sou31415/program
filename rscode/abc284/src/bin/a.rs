@@ -1,7 +1,8 @@
 use proconio::input;
+
 fn main() {
     input! {
-        n : usize,
+        n:usize,
         strlist:[String;n],
     }
     for i in 0..n {
