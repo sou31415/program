@@ -1,15 +1,14 @@
+//submit passed
 use proconio::input;
+use std::collections::HashSet;
 fn main() {
     input! {
         a:[usize;5],
     }
-    let mut cnt = 5;
-    for i in 0..4 {
-        for j in (i + 1)..=4 {
-            if a[i] == a[j] {
-                cnt -= 1;
-            }
-        }
+    //let mut cnt = 5;
+    let mut s = HashSet::new();
+    for i in a {
+        s.insert(i);
     }
-    println!("{}", cnt);
+    println!("{}", s.len());
 }

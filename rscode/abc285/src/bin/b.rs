@@ -1,5 +1,5 @@
-use proconio::{input,fastout};
-#[fastout]
+//TLE
+use proconio::input;
 fn main() {
     input! {
         n:usize,
