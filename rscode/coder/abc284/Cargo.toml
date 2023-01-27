@@ -5,6 +5,7 @@ edition = "2021"
 
 # dependencies added to new project
 [dependencies]
+petgraph="0.6.2"
 proconio="0.4.3"
 [profile.release]
 lto = true
