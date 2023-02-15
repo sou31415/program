@@ -1,0 +1,56 @@
+[package]
+name = "abc290"
+version = "0.1.0"
+edition = "2021"
+
+[package.metadata.cargo-compete]
+config = "../compete.toml"
+
+[package.metadata.cargo-compete.bin]
+a = { name = "abc290-a", problem = "https://atcoder.jp/contests/abc290/<FIXME: screen name of the problem>"}
+b = { name = "abc290-b", problem = "https://atcoder.jp/contests/abc290/<FIXME: screen name of the problem>"}
+c = { name = "abc290-c", problem = "https://atcoder.jp/contests/abc290/<FIXME: screen name of the problem>"}
+d = { name = "abc290-d", problem = "https://atcoder.jp/contests/abc290/<FIXME: screen name of the problem>"}
+e = { name = "abc290-e", problem = "https://atcoder.jp/contests/abc290/<FIXME: screen name of the problem>"}
+ex = { name = "abc290-ex", problem = "https://atcoder.jp/contests/abc290/<FIXME: screen name of the problem>"}
+f = { name = "abc290-f", problem = "https://atcoder.jp/contests/abc290/<FIXME: screen name of the problem>"}
+g = { name = "abc290-g", problem = "https://atcoder.jp/contests/abc290/<FIXME: screen name of the problem>"}
+
+# dependencies added to new project
+[dependencies]
+
+[profile.release]
+lto = true
+panic = 'abort'
+
+[[bin]]
+name = "abc290-a"
+path = "./src/bin/a.rs"
+
+[[bin]]
+name = "abc290-b"
+path = "./src/bin/b.rs"
+
+[[bin]]
+name = "abc290-c"
+path = "./src/bin/c.rs"
+
+[[bin]]
+name = "abc290-d"
+path = "./src/bin/d.rs"
+
+[[bin]]
+name = "abc290-e"
+path = "./src/bin/e.rs"
+
+[[bin]]
+name = "abc290-ex"
+path = "./src/bin/ex.rs"
+
+[[bin]]
+name = "abc290-f"
+path = "./src/bin/f.rs"
+
+[[bin]]
+name = "abc290-g"
+path = "./src/bin/g.rs"
