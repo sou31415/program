@@ -1,6 +1,6 @@
 //submit passed
 #[allow(unused_imports)]
-use proconio::{fastout, input};
+use proconio::{fastout, input, marker::Chars};
 #[fastout]
 fn main() {
     input! {

@@ -1,12 +1,9 @@
 [package]
-name = "abc284"
+name = "freak"
 version = "0.1.0"
 edition = "2021"
 
-# dependencies added to new project
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
 [dependencies]
-petgraph="0.6.3"
 proconio={version = "0.4.3" , features = ["derive"]}
-[profile.release]
-lto = true
-panic = 'abort'

@@ -1,12 +1,12 @@
 [package]
-name = "abc284"
+name = "abc290"
 version = "0.1.0"
 edition = "2021"
 
 # dependencies added to new project
 [dependencies]
-petgraph="0.6.3"
 proconio={version = "0.4.3" , features = ["derive"]}
+petgraph="0.6.3"
 [profile.release]
 lto = true
 panic = 'abort'
