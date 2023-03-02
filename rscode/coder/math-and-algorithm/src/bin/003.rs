@@ -1,3 +1,11 @@
+use proconio::input;
 fn main() {
-    unimplemented!();
+    input! {
+        a:usize , n:[usize;a],
+    }
+    let mut total: usize = 0;
+    for i in n {
+        total += i;
+    }
+    println!("{}", total);
 }

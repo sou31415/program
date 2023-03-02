@@ -1,3 +1,7 @@
+use proconio::input;
 fn main() {
-    unimplemented!();
+    input! {
+        a:usize,
+    }
+    println!("{}", 2 * a + 3);
 }

@@ -5,8 +5,7 @@ edition = "2021"
 
 # dependencies added to new project
 [dependencies]
-proconio="0.4.3"
-num-bigint="0.4"
+proconio={versions = "0.4.3" , features = ["derive"]}
 [profile.release]
 lto = true
 panic = 'abort'

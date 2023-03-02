@@ -1,31 +1,24 @@
-//TLE
-use proconio::input;
+use proconio::{fastout, input, marker::Chars};
+
+#[fastout]
 fn main() {
     input! {
-        n:usize,
-        s:String,
+        n:usize , s:Chars ,
     }
-    //let mut l:usize = 0;
-    
     for i in 1..n {
-        let mut l:usize = 0;
-        let mut judge : isize = 0;
-        for j in 0..(n-i){
-            if s.chars().nth(0).unwrap() == s.chars().nth(i).unwrap() {
-                judge = -1;
-                break;
-            }
-            if s.chars().nth(j).unwrap() != s.chars().nth(j+i).unwrap() {
-                if (j+i) <= n{
-                    l = j;
-                }
-            }else{
+        let mut result: usize = 0;
+        let mut state: bool = false;
+        for j in 0..n - i {
+            if s[j] != s[i + j] {
+                result += 1;
+            } else {
+                println!("{}", result);
+                state = true;
                 break;
             }
         }
-        println!("{}" , judge+(1+l as isize));
-        
+        if !state {
+            println!("{}", result);
+        }
     }
-        //println!("{}" , l);
 }
-
