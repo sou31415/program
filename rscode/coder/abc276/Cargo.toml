@@ -5,7 +5,7 @@ edition = "2021"
 
 # dependencies added to new project
 [dependencies]
-proconio="0.4.3"
+proconio={version = "0.4.3" , features = ["derive"]}
 petgraph="0.6.3"
 [profile.release]
 lto = true

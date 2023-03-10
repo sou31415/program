@@ -9,7 +9,17 @@ use std::collections::{HashSet, VecDeque};
 fn main() {
     input! {
         n:usize , m:usize ,
-        _ab:[(Usize1 , Usize1);m],
+        ab:[(Usize1 , Usize1);m],
     }
-    println!("{}", if n == m { "Yes" } else { "No" });
+    let mut uf = UnionFind::new(n);
+    for (a, b) in ab.iter() {
+        uf.union(*a, *b);
+    }
+    let jd: Vec<usize> = uf.into_labeling();
+    let mut result: Vec<usize> = vec![];
+    for i in 0..m {
+        if jd.iter().filter(|x| x == &&i).count() != 0 {
+            result.push(jd.iter().filter(|x| x == &&i).count());
+        }
+    }
 }
