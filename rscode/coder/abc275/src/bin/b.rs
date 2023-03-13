@@ -10,20 +10,12 @@ fn main() {
     input! {
         a:[usize;6],
     }
-    let mut result: usize = 0;
-    let mut result2: usize = 0;
-    let MOD: usize = 998244353;
-    for i in 0..3 {
-        result *= a[i] % MOD;
-        result %= MOD;
-    }
-    for j in 3..6 {
-        result2 *= a[j] % MOD;
-        result2 %= MOD;
-    }
-    if result > result2 {
-        println!("{}", result - result2);
+    let Mod: usize = 998244353;
+    let result1 = (((a[0] % Mod) * (a[1] % Mod) % Mod) * (a[2] % Mod)) % Mod;
+    let result2 = (((a[3] % Mod) * (a[4] % Mod) % Mod) * (a[5] % Mod)) % Mod;
+    if result1 >= result2 {
+        println!("{}", result1 - result2);
     } else {
-        println!("{}", MOD - (result2 - result));
+        println!("{}", 998244353 - (result2 - result1));
     }
 }
