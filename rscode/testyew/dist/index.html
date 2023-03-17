@@ -2,12 +2,12 @@
         <meta charset="utf-8">
         <title>Yew App</title>
     
-<link rel="preload" href="/testyew-9812c8113e040cee_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
-<link rel="modulepreload" href="/testyew-9812c8113e040cee.js"></head>
+<link rel="preload" href="testyew-9812c8113e040cee_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
+<link rel="modulepreload" href="testyew-9812c8113e040cee.js"></head>
 <body>
-<script type="module">import init from '/testyew-9812c8113e040cee.js';init('/testyew-9812c8113e040cee_bg.wasm');</script><script>(function () {
-    var protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    var url = protocol + '//' + window.location.host + '/_trunk/ws';
+<script type="module">import init from 'testyew-9812c8113e040cee.js';init('testyew-9812c8113e040cee_bg.wasm');</script><script>(function () {
+    var protocol = window.location.protocol === 'https:';
+    var url = protocol + '//' + window.location.host + '/testyew';
     var poll_interval = 5000;
     var reload_upon_connect = () => {
         window.setTimeout(
