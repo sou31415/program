@@ -1,16 +1,14 @@
 #[allow(unused_imports)]
-use petgraph::unionfind::UnionFind;
-#[allow(unused_imports)]
 use proconio::{fastout, input, marker::Chars, marker::Usize1};
 #[allow(unused_imports)]
-use std::collections::{BTreeSet, HashSet, VecDeque};
+use std::collections::{HashSet, VecDeque};
 
 #[fastout]
 fn main() {
     input! {
         n:usize , q:usize,
     }
-    let mut waitb: BTreeSet<usize> = BTreeSet::new();
+    let mut waitb: Vec<usize> = vec![];
     let mut wait: VecDeque<usize> = (0..n).collect();
     for _ in 0..q {
         input! {
@@ -18,15 +16,15 @@ fn main() {
         }
         if cas == 1 {
             let b: usize = wait.pop_front().unwrap();
-            waitb.insert(b);
+            waitb.push(b);
         } else if cas == 2 {
             input! {
                 x:Usize1,
             }
-            waitb.remove(&x);
+            let idx: usize = waitb.binary_search(&x).unwrap();
+            waitb.swap_remove(idx);
         } else {
-            let decoy = waitb.iter().next().unwrap();
-            println!("{}", decoy + 1);
+            println!("{}", waitb[0] + 1);
         }
     }
 }
