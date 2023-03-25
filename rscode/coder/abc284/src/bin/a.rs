@@ -1,4 +1,5 @@
 //submit passed
+use petgraph::unionfind::UnionFind;
 #[allow(unused_imports)]
 use proconio::{fastout, input, marker::Chars};
 #[fastout]
