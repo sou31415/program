@@ -1,18 +1,10 @@
-#[allow(unused_imports)]
-use petgraph::unionfind::UnionFind;
-#[allow(unused_imports)]
-use proconio::{fastout, input, marker::Chars, marker::Usize1};
-#[allow(unused_imports)]
-use std::collections::{BTreeSet, HashSet, VecDeque};
-
-#[fastout]
 fn main() {
-    input! {
+    proconio::input! {
         n:usize,
         a:[usize;n],
     }
-    let mut cnt: usize = 0;
-    let mut set: HashSet<usize> = HashSet::new();
+    let mut cnt = 0;
+    let mut set = std::collections::HashSet::new();
     for i in 0..n {
         if set.contains(&a[i]) {
             cnt += 1;

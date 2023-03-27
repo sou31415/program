@@ -12,12 +12,9 @@ fn main() {
         ab:[[usize;w];h],
     }
     let mut count:usize = 0;
-    let mut dp:Vec<Vec<usize>> = vec![vec![0;w];h];
-    dp[0] = vec![1_usize;w];
-    for i in 0..h{
-        dp[i][0] = 1;
-    }
+
     println!("{}",count);
 }
 
-fn search(v:&Vec<Vec<usize>> )
+fn dfs(v:Vec<Vec<usize>> , count:&mut usize ,h:usize , w:usize) {
+
