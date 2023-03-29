@@ -1,17 +1,31 @@
-use proconio::input;
+//submitted abc293_c
+#[allow(unused_imports)]
+use petgraph::unionfind::UnionFind;
+#[allow(unused_imports)]
+use proconio::{fastout, input, marker::Chars, marker::Usize1};
+#[allow(unused_imports)]
+use std::collections::{HashSet, VecDeque};
 
-fn main(){
+#[fastout]
+fn main() {
     input! {
-        v:usize,
-        e:usize,
-        s:usize,
-        t:usize,
+        n:usize , m:usize,
+        a:[usize;n],
+        b:[usize;m],
     }
-    for _ in 0..e {
-        input! {
-            a:usize,
-            b:usize,
-        }
-        let mut g : Vec<Vec<usize>> = Vec::new();
-        g[a].push(b);
+    let mut v: Vec<usize> = vec![];
+    for i in 0..n {
+        v.push(a[i]);
+    }
+    for i in 0..m {
+        v.push(b[i]);
+    }
+    v.sort();
+    for i in 0..a.len() {
+        print!("{} ", v.binary_search(&a[i]).unwrap() + 1);
+    }
+    println!("");
+    for i in 0..b.len() {
+        print!("{} ", v.binary_search(&b[i]).unwrap() + 1);
+    }
 }

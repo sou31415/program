@@ -1,10 +1,9 @@
-use proconio::{input , fastout , marker::Usize1};
+use proconio::{fastout, input, marker::Usize1};
 
 #[fastout]
 fn main() {
-    input!{
+    input! {
         n:usize,ab[(Usize1 , Usize1);n],
     }
-    for (a , b) in ab{
-
+    let mut g: Vec<Vec<usize>> = vec![];
 }
