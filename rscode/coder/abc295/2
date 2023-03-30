@@ -11,14 +11,14 @@ fn main() {
         s:Chars,
     }
     let mut dp: Vec<usize> = vec![0; 1 << 10];
-    let mut result: usize = 0;
+    let mut result = 0;
     dp[0] += 1;
     let mut place: usize = 0;
     let list = to_int(s);
     for &i in &list {
         place ^= 1 << i;
-        result += dp[place];
         dp[place] += 1;
+        result += dp[place];
     }
     println!("{}", result);
 }
