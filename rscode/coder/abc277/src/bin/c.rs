@@ -1,4 +1,3 @@
-use petgraph::unionfind::UnionFind;
 use proconio::{fastout, input, marker::Usize1};
 
 #[fastout]
@@ -7,25 +6,47 @@ fn main() {
         n:usize,
         ab:[(Usize1 , Usize1);n],
     }
-    let mut g: Vec<usize> = vec![]; //座標圧縮用
-    g.push(0);
+    let mut v: Vec<usize> = vec![]; //座標圧縮用
+    v.push(0);
     for &(a, b) in &ab {
-        g.push(a);
-        g.push(b);
+        v.push(a);
+        v.push(b);
     }
-    g.sort();
-    g.dedup();
-    let mut uf = UnionFind::new(g.len() + 3);
+    v.sort();
+    v.dedup();
+    let mut g: Vec<Vec<usize>> = vec![vec![]; v.len()];
     for (a, b) in ab {
-        let l: usize = g.binary_search(&a).unwrap();
-        let r: usize = g.binary_search(&b).unwrap();
-        uf.union(l, r);
+        let l: usize = v.binary_search(&a).unwrap();
+        let r: usize = v.binary_search(&b).unwrap();
+        g[l].push(r);
+        g[r].push(l);
     }
-    let mut decoy: usize = 0;
-    for i in 0..g.len() {
-        if uf.equiv(0, i) {
-            decoy = i;
+    let decoy: usize = dfs(g, v);
+    println!("{}", decoy + 1);
+}
+
+fn dfs(g: Vec<Vec<usize>>, v: Vec<usize>) -> usize {
+    let mut seen: Vec<bool> = vec![false; g.len()];
+    if g[0].is_empty() {
+        return 0_usize;
+    }
+    let mut stack = vec![];
+    let mut graph = g.clone();
+    while let Some(x) = graph[0].pop() {
+        stack.push(x);
+    }
+    seen[0] = true;
+    while let Some(x) = stack.pop() {
+        while let Some(y) = graph[x].pop() {
+            stack.push(y);
+        }
+        seen[x] = true;
+    }
+    let mut result: usize = 0;
+    for i in 0..seen.len() {
+        if seen[i] {
+            result = i;
         }
     }
-    println!("{}", g[decoy] + 1);
+    v[result]
 }
