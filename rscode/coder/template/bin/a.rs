@@ -8,5 +8,4 @@ use std::collections::{BTreeSet, HashSet, VecDeque};
 #[fastout]
 fn main() {
     input! {}
-    println!("{}",);
 }
