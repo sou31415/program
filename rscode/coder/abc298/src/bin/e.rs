@@ -7,11 +7,5 @@ use std::collections::{BTreeSet, HashSet, VecDeque};
 
 #[fastout]
 fn main() {
-    input! {
-        h:usize , _:usize,
-        mut a:[String;h],
-    }
-    for i in 0..h {
-        println!("{}", a[i].replace("TT", "PC"));
-    }
+    input! {}
 }

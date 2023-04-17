@@ -1,0 +1,11 @@
+use reqwest::header;
+use reqwest::Client;
+#[tokio::main]
+async fn main() -> Result<(), reqwest::Error> {
+    let client = Client::new();
+    let mut heay = header::HeaderMap::new();
+    heay.insert(header::COOKIE , "COMPASS=spreadsheet_forms=CjIACWuJV6GTYGICGMRRft62GHrp-RMArqiaR2L9MchzdOmfPMwUIy7XOFQTLZLUtI3CMBCD_eKhBho0AAlriVfLZ9iZT_6_b_VuTnUz2GSIQGv2Pc8A99fUQTde1NPg6vn_Yl4HUxpK6LkCEtTMNg==; S=spreadsheet_forms=Qj1qB9lWoORWC0ziJfRXl77Hcbyta9J6F-eKh5-bvc4; SIDCC=AP8dLtzMoteiYeNklbERv15yFfSBvwgHJHGajIvXZX5TZKa5BsG90wEWhb_Uo1oZj8sJ0koBAqw; __Secure-1PSIDCC=AP8dLtys8OQhEV1pTC4hark2sUw77N0B5odK32STqwFQY8IHNgeg5dTSg-2wGjoYTdkaXjsNtrg; __Secure-3PSIDCC=AP8dLtwUCxCx7J6D_yVbQz6Af7BVjB_afN0lC_wywYlc2qtE1UoN3a4le4OnTs4Lpd7rW4V46IA; 1P_JAR=2023-04-14-01; NID=511=twKUtqFSuDWTR__Q2nzOfBjgTOZLKgiRBp7_FOvSb65kIAaWqurGGY7y228IgHQZGxAdNLUgajXZ765d7chUykBx-aaFEiPNnkI6LTySBUpKpJUKvNxtyCdzsnD7-VoHPJZfBBAF29LkLdHV2-WbkCCiT4CXF2ZoTKlJ7b54ZHl_DYObKXsPfKDINGMBxQV41lPVI6j9MBrSAKRY7W5K0FUF5XIYsUqQCcMMLwmegql75mN_4WyWVUyx6Fp1UY0NWaEPygZLA1G3baWq2DivJ4d6GLs0-uO66Khzu1J7iIZkBVPoNnzFtUL4NTWDahmDFKX0_LjwFqQ5ARAo765skg5b-qwY-uEF6vWD-LTB7DXx0LAA9N_IfNnId7Lg; AEC=AUEFqZdhGL4mO6TYWJlqRyma7uyXDoMbiAhu3UXQKfgjVKgBbaZEdEO6xQ; OGPC=19031779-1:; OTZ=6983382_20_20__20_; OSID=VAjHnwdMRH_0uaCSU5551vTHreyrpGM8b-DA_L6aJRxOmh94hu2MZc6tf48yUixXh4WKKQ.; __Secure-OSID=VAjHnwdMRH_0uaCSU5551vTHreyrpGM8b-DA_L6aJRxOmh94wgpxtTbz6AlGR3asHG33bQ.; APISID=pJscCM28smYN3w0B/A83A9XihHYJ8pXP4z; HSID=Au4FfKKwgOczF5Dew; SAPISID=IOnEC1bavlZuAQWu/A27mzssUiNyDS8t4U; SID=VAjHnyB1HpvymAipMoTdfwWM-fNcFL50B0oo9gEpmhAJWG4KfQ5dVqOk6pMrWMaGkURcVw.; SSID=ARe_NGfM9_C8w8gwW; __Secure-1PAPISID=IOnEC1bavlZuAQWu/A27mzssUiNyDS8t4U; __Secure-1PSID=VAjHnyB1HpvymAipMoTdfwWM-fNcFL50B0oo9gEpmhAJWG4K5pmtgZF8X0SvmElQHB85Pg.; __Secure-3PAPISID=IOnEC1bavlZuAQWu/A27mzssUiNyDS8t4U; __Secure-3PSID=VAjHnyB1HpvymAipMoTdfwWM-fNcFL50B0oo9gEpmhAJWG4KRxJGs899x3DtZqthdEhqJw.; SEARCH_SAMESITE=CgQIh5cB; ANID=AHWqTUlnZWw9rNPlCyfvPOeNSmALhoSI_xVUIyKFDihyhnGJfw9fVP7A73ltVxJv".parse().unwrap());
+    let res = client.post("https://docs.google.com/forms/u/1/d/e/1FAIpQLSc6-1J5B5UkTbTwj9werYh5DSr4J1K9kHv6HiGeVQ-qf9tdDg/formResponse").headers(heay).send().await?.text().await?;
+    println!("{:?}", res);
+    Ok(())
+}

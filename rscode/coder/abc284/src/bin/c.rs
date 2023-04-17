@@ -1,18 +1,16 @@
-use proconio::{input, marker::Usize1};
+use petgraph::unionfind::UnionFind;
+use proconio::{fastout, input, marker::Usize1};
+use std::collections::HashSet;
+#[fastout]
 fn main() {
     input! {
-        n :usize , m:usize,
+        n:usize , m:usize,
         ab:[(Usize1 , Usize1);m],
     }
-    let mut uf = petgraph::unionfind::UnionFind::new(n);
-    for (a, b) in ab {
+    let mut uf = UnionFind::new(n);
+    for &(a, b) in &ab {
         uf.union(a, b);
     }
-    println!(
-        "{}",
-        uf.into_labeling()
-            .into_iter()
-            .collect::<std::collections::HashSet<_>>()
-            .len()
-    );
+    let set: HashSet<usize> = uf.into_labeling().into_iter().collect::<HashSet<usize>>();
+    println!("{}", set.len());
 }

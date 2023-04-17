@@ -8,10 +8,12 @@ use std::collections::{BTreeSet, HashSet, VecDeque};
 #[fastout]
 fn main() {
     input! {
-        h:usize , _:usize,
-        mut a:[String;h],
+        n:usize,
+        a:Chars,
     }
-    for i in 0..h {
-        println!("{}", a[i].replace("TT", "PC"));
+    if !a.contains(&'x') && a.contains(&'o') {
+        println!("Yes");
+    } else {
+        println!("No");
     }
 }
