@@ -13,8 +13,8 @@ fn main() {
         n:usize,a:usize,b:usize,
         c:[usize;n],
     }
-    for i in 0..n {
-        if c[i] == a + b {
+    for (i, &k) in c.iter().enumerate() {
+        if k == a + b {
             println!("{}", i + 1);
         }
     }
