@@ -1,6 +1,5 @@
 use petgraph::unionfind::UnionFind;
 use proconio::{fastout, input, marker::Usize1};
-use std::collections::HashSet;
 #[fastout]
 fn main() {
     input! {
@@ -11,6 +10,8 @@ fn main() {
     for &(a, b) in &ab {
         uf.union(a, b);
     }
-    let set: HashSet<usize> = uf.into_labeling().into_iter().collect::<HashSet<usize>>();
+    let mut set: Vec<usize> = uf.into_labeling();
+    set.sort();
+    set.dedup();
     println!("{}", set.len());
 }
