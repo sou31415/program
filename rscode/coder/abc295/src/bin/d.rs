@@ -8,7 +8,7 @@ use std::collections::{BTreeSet, HashMap, HashSet, VecDeque};
 #[fastout]
 fn main() {
     input! {
-        s:Chars,
+        s:String,
     }
     let mut dp: Vec<usize> = vec![0; 1 << 10];
     let mut result: usize = 0;
@@ -23,10 +23,10 @@ fn main() {
     println!("{}", result);
 }
 
-fn to_int(a: Vec<char>) -> Vec<usize> {
-    let mut l: Vec<usize> = vec![];
-    for &i in &a {
-        l.push(i.to_string().parse::<usize>().unwrap());
-    }
-    l
+fn to_int(a: String) -> Vec<usize> {
+    let v = a
+        .chars()
+        .map(|x| x.to_string().parse::<usize>().unwrap())
+        .collect::<Vec<usize>>();
+    v
 }
