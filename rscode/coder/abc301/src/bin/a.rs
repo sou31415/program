@@ -1,26 +1,15 @@
-#[allow(unused_imports)]
-use itertools::Itertools;
-#[allow(unused_imports)]
-use petgraph::unionfind::UnionFind;
-#[allow(unused_imports)]
-use proconio::{fastout, input, marker::Chars, marker::Usize1};
-#[allow(unused_imports)]
-use std::collections::{BTreeSet, HashSet, VecDeque};
-
-#[fastout]
 fn main() {
-    input! {
+    proconio::input! {
         n:usize,s:String
     }
-    if s.matches("T").count() > s.matches("A").count() {
-        println!("T");
-    } else if s.matches("T").count() < s.matches("A").count() {
-        println!("A");
-    } else {
-        if s.chars().nth(n - 1).unwrap() == 'A' {
-            println!("T");
+    println!(
+        "{}",
+        if s.matches("T").count() > s.matches("A").count() {
+            'T'
+        } else if s.matches("T").count() < s.matches("A").count() {
+            'A'
         } else {
-            println!("A");
+            ('T' as u8 + 'A' as u8 - s.chars().nth(n - 1).unwrap() as u8) as char
         }
-    }
+    );
 }

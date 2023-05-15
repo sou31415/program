@@ -8,19 +8,19 @@ fn main() {
         s: [(String, String); n]
     }
     let mut v: Vec<String> = Vec::new();
-    let mut uf: UnionFind<usize> = UnionFind::new(2 * n);
-    for (a, b) in &s {
+    for (a, b) in s.iter() {
         v.push(a.to_string());
         v.push(b.to_string());
     }
     v.sort();
     v.dedup();
-    for (a, b) in &s {
-        if uf.equiv(v.binary_search(&a).unwrap(), v.binary_search(&b).unwrap()) {
+    let mut uf = UnionFind::new(v.len());
+    for (a, b) in s.iter() {
+        let s = v.binary_search(&a).unwrap();
+        let r = v.binary_search(&b).unwrap();
+        if !uf.union(s, r) {
             println!("No");
             return;
-        } else {
-            uf.union(v.binary_search(&a).unwrap(), v.binary_search(&b).unwrap());
         }
     }
     println!("Yes");
