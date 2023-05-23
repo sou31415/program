@@ -40,9 +40,9 @@ fn main() {
     }
     let v = uf.into_labeling();
     let set = v.iter().map(|&x| x).collect::<HashSet<usize>>();
-    if set.len() == 1 {
-        println!("Yes");
-    } else {
+    if set.len() != 1 {
         println!("No");
+    } else {
+        println!("Yes");
     }
 }

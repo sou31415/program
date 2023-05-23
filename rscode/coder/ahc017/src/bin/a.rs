@@ -1,4 +1,4 @@
-use petgraph::unionfind::UnionFind;
+use itertools::Itertools;
 use proconio::{fastout, input, marker::Usize1};
 #[fastout]
 fn main() {
@@ -6,9 +6,5 @@ fn main() {
         n:usize,m:usize,d:usize,k:usize,
         a:[(Usize1,Usize1,usize);m],
     }
-    let mut uf = UnionFind::new(n);
-    for (a,b,_) in a{
-        uf.union(a,b);
-    }
-    :q
+    println!("{}", (1..=m).map(|x| (x % d) + 1).join(" "));
 }
