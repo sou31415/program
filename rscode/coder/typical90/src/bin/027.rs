@@ -1,16 +1,14 @@
-use proconio::input;
+use proconio::{fastout, input};
+use std::collections::HashSet;
+#[fastout]
 fn main() {
     input! {
         n:usize,a:[String;n],
     }
-    let mut v: Vec<bool> = vec![false; n];
-    let mut q = a.clone();
-    q.sort();
-    q.dedup();
+    let mut set: HashSet<&String> = HashSet::new();
     for i in 0..n {
-        let k = q.binary_search(&a[i]).unwrap();
-        if !v[k] {
-            v[k] = true;
+        if !set.contains(&&a[i]) {
+            set.insert(&a[i]);
             println!("{}", i + 1);
         }
     }
