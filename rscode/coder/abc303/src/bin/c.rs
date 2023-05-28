@@ -16,7 +16,7 @@ fn main() {
         s:Chars,
         xy:[(i64,i64);m]
     }
-    let mut set: HashSet<(i64, i64)> = xy.iter().map(|&(a, b)| (a, b)).collect();
+    let mut set: BTreeSet<(i64, i64)> = xy.iter().map(|&(a, b)| (a, b)).collect();
     let mut stam: i64 = h as i64;
     let mut place: (i64, i64) = (0, 0);
 
