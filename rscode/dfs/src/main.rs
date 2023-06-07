@@ -42,3 +42,20 @@ fn dfs(h: usize, w: usize, g: Vec<Vec<usize>>) -> usize {
     }
     count
 }
+
+fn dfs2(n: usize, g: &mut Vec<Vec<usize>>) -> Vec<bool> {
+    let mut seen: Vec<bool> = vec![false; n];
+    let mut stack: Vec<usize> = vec![];
+    seen[0] = true;
+    while let Some(x) = g[0].pop() {
+        stack.push(x);
+        seen[x] = true;
+    }
+    while let Some(x) = stack.pop() {
+        while let Some(y) = g[x].pop() {
+            stack.push(y);
+            seen[y] = true;
+        }
+    }
+    seen
+}

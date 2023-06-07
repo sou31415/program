@@ -14,22 +14,40 @@ fn main() {
         n:usize,d:usize,
         xy:[(isize,isize);n]
     }
-    let mut uf = UnionFind::new(n);
-    for i in 0..n {
-        for j in 0..n {
-            let q = ((xy[i].0 - xy[j].0).abs() * (xy[i].0 - xy[j].0).abs())
-                + ((xy[i].1 - xy[j].1).abs() * (xy[i].1 - xy[j].1).abs());
-            if (q <= (d * d) as isize) {
-                uf.union(i, j);
+    let mut g: Vec<Vec<usize>> = vec![vec![]; n];
+    for i in 0..(n - 1) {
+        for j in (i + 1)..n {
+            let q = (xy[i].0 - xy[j].0).abs() * (xy[i].0 - xy[j].0).abs()
+                + (xy[i].1 - xy[j].1).abs() * (xy[i].1 - xy[j].1).abs();
+            if d * d >= q as usize {
+                g[i].push(j);
+                g[j].push(i);
             }
         }
     }
-
+    let v = dfs(n, &mut g);
     for i in 0..n {
-        if uf.find(0) == uf.find(i) {
+        if v[i] {
             println!("Yes");
         } else {
             println!("No");
         }
     }
+}
+
+fn dfs(n: usize, g: &mut Vec<Vec<usize>>) -> Vec<bool> {
+    let mut seen: Vec<bool> = vec![false; n];
+    let mut stack: Vec<usize> = vec![];
+    seen[0] = true;
+    while let Some(x) = g[0].pop() {
+        stack.push(x);
+        seen[x] = true;
+    }
+    while let Some(x) = stack.pop() {
+        while let Some(y) = g[x].pop() {
+            stack.push(y);
+            seen[y] = true;
+        }
+    }
+    seen
 }
