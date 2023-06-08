@@ -25,7 +25,8 @@ fn main() {
             }
         }
     }
-    let v = dfs(n, &mut g);
+    let mut v = vec![false; n];
+    dfs(n, &mut g, &mut v);
     for i in 0..n {
         if v[i] {
             println!("Yes");
@@ -35,8 +36,7 @@ fn main() {
     }
 }
 
-fn dfs(n: usize, g: &mut Vec<Vec<usize>>) -> Vec<bool> {
-    let mut seen: Vec<bool> = vec![false; n];
+fn dfs(n: usize, g: &mut Vec<Vec<usize>>, seen: &mut Vec<bool>) {
     let mut stack: Vec<usize> = vec![];
     seen[0] = true;
     while let Some(x) = g[0].pop() {
@@ -49,5 +49,4 @@ fn dfs(n: usize, g: &mut Vec<Vec<usize>>) -> Vec<bool> {
             seen[y] = true;
         }
     }
-    seen
 }
