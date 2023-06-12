@@ -1,5 +1,4 @@
 use proconio::{input, marker::Usize1};
-use std::collections::HashSet;
 fn main() {
     input! {
         n:usize , m:usize,
@@ -20,14 +19,13 @@ fn main() {
 
 fn dfs(n: usize, v: &mut Vec<Vec<usize>>) -> usize {
     let mut r: usize = 1;
-    let mut path: HashSet<usize> = HashSet::new();
-    let mut stack: Vec<usize> = vec![];
+    let mut node: Vec<usize> = vec![0];
+    let mut stack: Vec<usize> = vec![0];
     let mut seen: Vec<bool> = vec![false; n];
     for i in 0..v[0].len() {
         stack.push(v[0][i]);
         r += 1;
     }
-    path.insert(0);
     seen[0] = true;
     while let Some(x) = stack.pop() {
         if r >= 100000 {
@@ -41,8 +39,15 @@ fn dfs(n: usize, v: &mut Vec<Vec<usize>>) -> usize {
         }
         seen[x] = true;
         if v[x].iter().all(|&k| seen[k]) {
-            seen[x] = false;
+            if let Some(y) = node.last() {
+                seen[*y] = true;
+                seen[x] = false;
+                node.pop();
+            }
+        } else {
+            node.push(x);
         }
     }
+
     return r;
 }
