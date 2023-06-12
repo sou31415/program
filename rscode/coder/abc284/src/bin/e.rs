@@ -1,5 +1,5 @@
 use proconio::{input, marker::Usize1};
-
+use std::collections::HashSet;
 fn main() {
     input! {
         n:usize , m:usize,
@@ -10,32 +10,39 @@ fn main() {
         node[a].push(b);
         node[b].push(a);
     }
-    let mut result: usize = 1;
     if node[0].is_empty() {
         println!("1");
         return;
     }
-    let mut hashes: usize = 0;
-    let mut stack: Vec<(usize, usize)> = vec![];
-    for i in 0..node[0].len() {
-        let x = node[0][i];
-        if x ^ hashes == x - hashes && x != 0 {
-            result += 1;
-            stack.push((x, x | hashes));
-        }
-    }
-    while let Some((x, z)) = stack.pop() {
-        for i in 0..node[x].len() {
-            let y = node[x][i];
-            if result > 1000000 {
-                println!("1000000");
-                return;
-            }
-            if z ^ y == (z as isize - y as isize).abs() as usize && y != 0 {
-                result += 1;
-                stack.push((y, z | y));
-            }
-        }
-    }
+    let result: usize = dfs(n, &mut node);
     println!("{}", result);
+}
+
+fn dfs(n: usize, v: &mut Vec<Vec<usize>>) -> usize {
+    let mut r: usize = 1;
+    let mut path: HashSet<usize> = HashSet::new();
+    let mut stack: Vec<usize> = vec![];
+    let mut seen: Vec<bool> = vec![false; n];
+    for i in 0..v[0].len() {
+        stack.push(v[0][i]);
+        r += 1;
+    }
+    path.insert(0);
+    seen[0] = true;
+    while let Some(x) = stack.pop() {
+        if r >= 100000 {
+            return 100000_usize;
+        }
+        for i in 0..v[x].len() {
+            if !seen[v[x][i]] {
+                stack.push(v[x][i]);
+                r += 1;
+            }
+        }
+        seen[x] = true;
+        if v[x].iter().all(|&k| seen[k]) {
+            seen[x] = false;
+        }
+    }
+    return r;
 }
