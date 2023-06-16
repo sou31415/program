@@ -1,4 +1,3 @@
-//submit passed
 use proconio::input;
 
 fn main() {
@@ -9,7 +8,7 @@ fn main() {
         input! {
             mut b : usize,
         }
-        let mut result: [usize; 2] = [0, 0];
+        let mut r: [usize; 2] = [0, 0];
         let mut i: usize = 2;
         while b > i * i * i {
             if b % i == 0 {
@@ -18,12 +17,12 @@ fn main() {
             i += 1;
         }
         if b % (i * i) == 0 {
-            result[0] = i;
-            result[1] = b / (i * i);
+            r[0] = i;
+            r[1] = b / (i * i);
         } else {
-            result[1] = i;
-            result[0] = ((b / i) as f64).sqrt() as usize;
+            r[1] = i;
+            r[0] = ((b / i) as f64).sqrt() as usize;
         }
-        println!("{} {}", result[0], result[1]);
+        println!("{} {}", r[0], r[1]);
     }
 }

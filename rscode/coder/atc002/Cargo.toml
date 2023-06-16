@@ -1,12 +1,12 @@
 [package]
-name = "ahc020"
+name = "atc002"
 version = "0.1.0"
 edition = "2021"
 
 # dependencies added to new project
 [dependencies]
-proconio={version="0.4.3",features=["derive"]}
-petgraph = "0.6.3"
+proconio="0.4.3"
+petgraph="0.6.3"
 itertools="0.10.5"
 [profile.release]
 lto = true
