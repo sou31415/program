@@ -8,6 +8,11 @@ use std::io::{stdin, stdout, BufReader};
 #[fastout]
 fn main() {
     input! {
+            n:usize,s:Chars,
+    }
+    for i in 0..2 * n {
+        print!("{}", s[i / 2]);
+    }
 }
 pub fn ziparam(a: usize, b: usize) -> usize {
     // |a:usize - b:usize| -> usize
@@ -21,7 +26,7 @@ pub fn power(n: usize, x: usize) -> usize {
     let mut b: usize = n;
     let mut a: usize = 1;
     let mut i: usize = 0;
-    while x != 0 {
+    while c != 0 {
         if c << i & x != 0 {
             a *= b;
             b *= b;
@@ -29,6 +34,7 @@ pub fn power(n: usize, x: usize) -> usize {
         } else {
             b *= b;
         }
+        i += 1;
     }
     a
 }
@@ -48,6 +54,10 @@ pub fn powm(n: usize, c: usize, m: usize) -> usize {
         } else {
             b = (b * b) % m;
         }
+        i += 1;
+    }
+    b
+}
         i += 1;
     }
     a
