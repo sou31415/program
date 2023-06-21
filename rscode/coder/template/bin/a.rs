@@ -14,27 +14,26 @@ pub fn ziparam(a: usize, b: usize) -> usize {
     return max(a, b) - min(a, b);
 }
 
-pub fn power(n: usize, x: usize) -> usize {
-    // n ^ x -> O(logx)
-    let mut c: usize = x;
+pub fn power(n: usize, r: usize) -> usize {
     let k: usize = 1;
-    let mut b: usize = n;
+    let mut x: usize = r;
     let mut a: usize = 1;
+    let mut b: usize = n;
     let mut i: usize = 0;
     while x != 0 {
-        if c << i & x != 0 {
+        if k << i & x != 0 {
             a *= b;
             b *= b;
-            c ^= (k << i);
+            x -= k << i;
         } else {
             b *= b;
         }
+        i += 1;
     }
     a
 }
 
-pub fn powm(n: usize, c: usize, m: usize) -> usize {
-    // n ^ c mod m -> O(logc)
+pub fn powm(n: usize, m: usize, c: usize) -> usize {
     let k: usize = 1;
     let mut x = c;
     let mut b: usize = n;
@@ -44,7 +43,7 @@ pub fn powm(n: usize, c: usize, m: usize) -> usize {
         if k << i & x != 0 {
             a = (a * b) % m;
             b = (b * b) % m;
-            x ^= (k << i);
+            x ^= k << i;
         } else {
             b = (b * b) % m;
         }
@@ -52,3 +51,21 @@ pub fn powm(n: usize, c: usize, m: usize) -> usize {
     }
     a
 }
+pub fn rt(n: usize) -> usize {
+    let mut l: u128 = 1;
+    let mut r: u128 = n as u128;
+    let mut m: u128 = 0;
+    while r - l > 1 {
+        m = (r + l) / 2;
+        if m * m == n as u128 {
+            return m as usize;
+        }
+        if m * m > n as u128 {
+            r = m;
+        } else {
+            l = m;
+        }
+    }
+    return l as usize;
+}
+
