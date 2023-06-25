@@ -7,10 +7,10 @@ fn main() {
     let TodoFile = "/Users/sotarofurukawa/.config/todo.txt";
     let args: Vec<String> = env::args().collect();
     if args.len() < 3 {
-        println!("[Usage] todo [Option] [Tag] | [TaskName]");
-        println!("-add      :       Add Tasks");
-        println!("-search   :       Search Data or Tasks");
-        println!("-see      :       See All Tasks");
+        eprintln!("[Usage] todo [Option] [Tag] | [TaskName]");
+        eprintln!("-add      :       Add Tasks");
+        eprintln!("-search   :       Search Data or Tasks");
+        eprintln!("-see      :       See All Tasks");
         return;
     }
     if args[1] == "-search" {
