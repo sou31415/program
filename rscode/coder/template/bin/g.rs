@@ -32,7 +32,6 @@ pub fn power(n: usize, r: usize) -> usize {
     }
     a
 }
-
 pub fn powm(n: usize, m: usize, c: usize) -> usize {
     let k: usize = 1;
     let mut x = c;
