@@ -19,7 +19,6 @@ fn main() {
         result = 0;
     }
 }
-/*
 pub fn ziparam(a: usize, b: usize) -> usize {
     // |a:usize - b:usize| -> usize
     return max(a, b) - min(a, b);
@@ -43,7 +42,6 @@ pub fn power(n: usize, r: usize) -> usize {
     }
     a
 }
-
 pub fn powm(n: usize, m: usize, c: usize) -> usize {
     let k: usize = 1;
     let mut x = c;
@@ -62,6 +60,7 @@ pub fn powm(n: usize, m: usize, c: usize) -> usize {
     }
     a
 }
+
 pub fn rt(n: usize) -> usize {
     let mut l: u128 = 1;
     let mut r: u128 = n as u128;
@@ -78,4 +77,4 @@ pub fn rt(n: usize) -> usize {
         }
     }
     return l as usize;
-}*/
+}

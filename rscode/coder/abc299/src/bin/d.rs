@@ -13,16 +13,15 @@ fn main() {
     let mut l: usize = 1;
     let mut r: usize = n;
     while r - l > 1 {
-        let m = (r + l) / 2;
         println!("? {}", (r + l) / 2);
         input! {
             from &mut source,
-            k:usize,
+            m:usize,
         }
-        if k == 1 {
-            r = m;
+        if m == 0 {
+            l = (r + l) / 2;
         } else {
-            l = m;
+            r = (r + l) / 2;
         }
     }
     println!("! {}", l);
