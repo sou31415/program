@@ -1,14 +1,31 @@
 #![allow(unused_imports)]
 use itertools::Itertools;
-use superslice::Ext;
 use petgraph::unionfind::UnionFind;
 use proconio::{fastout, input, marker::Chars, marker::Usize1, source::line::LineSource};
-use std::cmp::{max, min , Reverse};
+use std::cmp::{max, min, Reverse};
 use std::collections::{BTreeSet, HashSet, VecDeque};
 use std::io::{stdin, stdout, BufReader};
 #[fastout]
 fn main() {
     input! {
+        n:usize,s:[Chars;n],
+    }
+    let mut r = s.clone();
+    for i in 0..n - 1 {
+        r[0][i + 1] = s[0][i];
+    }
+    for i in 0..n - 1 {
+        r[i + 1][n - 1] = s[i][n - 1];
+    }
+    for i in 0..n - 1 {
+        r[n - 1][i] = s[n - 1][i + 1];
+    }
+    for i in 0..n - 1 {
+        r[i][0] = s[i + 1][0];
+    }
+    for i in 0..n {
+        println!("{}", r[i].iter().join(""));
+    }
 }
 pub fn ziparam(a: usize, b: usize) -> usize {
     // |a:usize - b:usize| -> usize
@@ -31,16 +48,17 @@ pub fn power(n: usize, mut x: usize) -> usize {
     }
     a
 }
-
-pub fn powm(n: usize, m: usize, mut x: usize) -> usize {
+pub fn powm(n: usize, m: usize, c: usize) -> usize {
+    let k: usize = 1;
+    let mut x = c;
     let mut b: usize = n;
     let mut a: usize = 1;
     let mut i = 0;
     while x != 0 {
-        if 1usize << i & x != 0 {
+        if k << i & x != 0 {
             a = (a * b) % m;
             b = (b * b) % m;
-            x ^= 1usize << i;
+            x ^= k << i;
         } else {
             b = (b * b) % m;
         }
@@ -48,7 +66,6 @@ pub fn powm(n: usize, m: usize, mut x: usize) -> usize {
     }
     a
 }
-
 pub fn rt(n: usize) -> usize {
     let mut l: u128 = 1;
     let mut r: u128 = n as u128;
@@ -88,4 +105,3 @@ pub fn rotate_diff(q: String) -> usize {
     }
     result
 }
-

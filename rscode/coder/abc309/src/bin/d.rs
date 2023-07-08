@@ -1,14 +1,21 @@
 #![allow(unused_imports)]
 use itertools::Itertools;
-use superslice::Ext;
 use petgraph::unionfind::UnionFind;
 use proconio::{fastout, input, marker::Chars, marker::Usize1, source::line::LineSource};
-use std::cmp::{max, min , Reverse};
+use std::cmp::{max, min, Reverse};
 use std::collections::{BTreeSet, HashSet, VecDeque};
 use std::io::{stdin, stdout, BufReader};
 #[fastout]
 fn main() {
     input! {
+        n1:usize,n2:usize,m:usize,
+        ab:[(Usize1,Usize1);m],
+    }
+    let mut g: Vec<Vec<usize>> = vec![vec![]; n1 + n2];
+    for (a, b) in ab {
+        g[a].push(b);
+        g[b].push(a);
+    }
 }
 pub fn ziparam(a: usize, b: usize) -> usize {
     // |a:usize - b:usize| -> usize
@@ -31,16 +38,17 @@ pub fn power(n: usize, mut x: usize) -> usize {
     }
     a
 }
-
-pub fn powm(n: usize, m: usize, mut x: usize) -> usize {
+pub fn powm(n: usize, m: usize, c: usize) -> usize {
+    let k: usize = 1;
+    let mut x = c;
     let mut b: usize = n;
     let mut a: usize = 1;
     let mut i = 0;
     while x != 0 {
-        if 1usize << i & x != 0 {
+        if k << i & x != 0 {
             a = (a * b) % m;
             b = (b * b) % m;
-            x ^= 1usize << i;
+            x ^= k << i;
         } else {
             b = (b * b) % m;
         }
@@ -48,7 +56,6 @@ pub fn powm(n: usize, m: usize, mut x: usize) -> usize {
     }
     a
 }
-
 pub fn rt(n: usize) -> usize {
     let mut l: u128 = 1;
     let mut r: u128 = n as u128;
@@ -88,4 +95,3 @@ pub fn rotate_diff(q: String) -> usize {
     }
     result
 }
-
