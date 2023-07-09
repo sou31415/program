@@ -1,51 +1,27 @@
-#[allow(unused_imports)]
-use itertools::Itertools;
-#[allow(unused_imports)]
-use petgraph::unionfind::UnionFind;
-#[allow(unused_imports)]
-use proconio::{fastout, input, marker::Chars, marker::Usize1};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{BTreeSet, HashSet, VecDeque};
-#[fastout]
+use proconio::{input, marker::Chars};
+use std::cmp::min;
 fn main() {
     input! {
-        x:usize,y:usize,z:usize,
-        s:Chars,
+      x:usize,y:usize,z:usize,
+      s:Chars,
     }
-    let mut v = VecDeque::new();
-    let mut l: usize = 0;
-    let mut u: usize = 0;
-    let mut c = false;
-    let mut d = false;
-    for i in 0..s.len() {
-        if s[i] == 'A' {
-            u += 1;
-            if l != 0 {
-                v.push_back(l);
-                v.push_back(0);
-                l = 0;
-            }
+    let n = s.len();
+    let mut dp: Vec<Vec<usize>> = vec![vec![0; 2]; n];
+    if s[0] == 'a' {
+        dp[0][0] = x;
+        dp[0][1] = z + y;
+    } else {
+        dp[0][0] = y;
+        dp[0][1] = z + x;
+    }
+    for i in 1..n {
+        if s[i] == 'a' {
+            dp[i][0] = min(dp[i - 1][0] + x, dp[i - 1][1] + z + x);
+            dp[i][1] = min(dp[i - 1][1] + y, dp[i - 1][0] + z + y);
         } else {
-            l += 1;
-            if u != 0 {
-                v.push_back(u);
-                v.push_back(0);
-                u = 0;
-            }
+            dp[i][1] = min(dp[i - 1][0] + z + x, dp[i - 1][1] + x);
+            dp[i][0] = min(dp[i - 1][0] + y, dp[i - 1][1] + z + y);
         }
     }
-    if x == y {
-        let q = v.iter().map(|&a| a * x).sum::<usize>();
-        let r = v.iter().map(|&a| a * y).sum::<usize>();
-        println!("{}", q + r);
-        return;
-    }
-    if a[0] == 'a'{
-        let q = z / max(x,y) - min(x,y);
-        let n = v.pop_front().unwrap() * x;
-        cnt += n;
-        for i in 0..v.len(){
-            if a[i] > 
+    println!("{}", min(dp[n - 1][0], dp[n - 1][1]));
 }
