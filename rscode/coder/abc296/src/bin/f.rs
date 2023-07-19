@@ -7,6 +7,16 @@ use std::collections::{BTreeSet, HashSet, VecDeque};
 
 #[fastout]
 fn main() {
-    input! {}
-    println!("{}",);
+    input! {
+        n:usize,
+        mut a:[usize;n],
+        mut b:[usize;n]
+    }
+    a.sort();
+    b.sort();
+    if a == b {
+        println!("Yes");
+    } else {
+        println!("No");
+    }
 }
