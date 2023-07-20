@@ -8,6 +8,8 @@ use std::collections::{BTreeSet, HashSet, VecDeque};
 use std::io::{stdin, stdout, BufReader};
 #[fastout]
 fn main() {
+    let yes = String::from("Yes");
+    let no = String::from("No");
     input! {
 }
 pub fn ziparam(a: usize, b: usize) -> usize {

@@ -11,6 +11,8 @@ fn main() {
     input! {
         n:usize,m:usize,
     }
+    let yes = String::from("Yes");
+    let no = String::from("No");
     let mut v = vec![];
     for _ in 0..n {
         input! {
@@ -27,12 +29,12 @@ fn main() {
             let (x, y, z) = v[i].clone();
             let (a, b, c) = v[j].clone();
             if x > a && c.is_superset(&z) || x == a && c.is_superset(&z) && c.len() > z.len() {
-                println!("Yes");
+                println!("{}", yes);
                 return;
             }
         }
     }
-    println!("No");
+    println!("{}", no);
 }
 pub fn ziparam(a: usize, b: usize) -> usize {
     // |a:usize - b:usize| -> usize
