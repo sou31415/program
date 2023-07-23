@@ -17,6 +17,41 @@ pub fn ziparam(a: usize, b: usize) -> usize {
     return max(a, b) - min(a, b);
 }
 
+pub fn matrix_pow(mut r: Vec<Vec<usize>>, m: usize, mut x: usize) -> Vec<Vec<usize>> {
+    let mut v: Vec<Vec<usize>> = vec![vec![0; r.len()]; r.len()];
+    for i in 0..r.len() {
+        v[i][i] = 1;
+    }
+    let mut i: usize = 0;
+    while x != 0 {
+        if 1usize << i & x != 0 {
+            let mut d: Vec<Vec<usize>> = vec![vec![0, 0], vec![0, 0]];
+            for i in 0..r.len() {
+                for j in 0..r.len() {
+                    for k in 0..r.len() {
+                        d[i][j] += v[i][k] * r[k][j];
+                        d[i][j] %= m;
+                    }
+                }
+            }
+            x -= 1usize << i;
+            v = d;
+        }
+        let mut d: Vec<Vec<usize>> = vec![vec![0, 0], vec![0, 0]];
+        for i in 0..r.len() {
+            for k in 0..r.len() {
+                for j in 0..r.len() {
+                    d[i][j] += r[i][k] * r[k][j];
+                    d[i][j] %= m;
+                }
+            }
+        }
+        r = d;
+        i += 1;
+    }
+    return v;
+}
+
 pub fn power(n: usize, mut x: usize) -> usize {
     let mut a: usize = 1;
     let mut b: usize = n;
@@ -90,4 +125,5 @@ pub fn rotate_diff(q: String) -> usize {
     }
     result
 }
+
 

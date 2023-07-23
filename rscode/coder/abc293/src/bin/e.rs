@@ -9,19 +9,16 @@ fn main() {
     input! {
         a:usize,x:usize,mut m:usize,
     }
-    let k = power(a, m, x);
-    let result = f(k, m);
+    let r: Vec<Vec<usize>> = vec![vec![a, 1], vec![0, 1]];
+    let k = matrix_pow(r, a, m, x);
+    let result = k[0][1];
     println!("{}", result);
 }
-
-fn f(v: Vec<Vec<usize>>, m: usize) -> usize {
-    let decoy: usize = v[0][1] % m;
-    decoy
-}
-
-fn power(a: usize, m: usize, mut x: usize) -> Vec<Vec<usize>> {
-    let mut r = vec![vec![a, 1], vec![0, 1]];
-    let mut v: Vec<Vec<usize>> = vec![vec![1, 0], vec![0, 1]];
+pub fn matrix_pow(mut r: Vec<Vec<usize>>, a: usize, m: usize, mut x: usize) -> Vec<Vec<usize>> {
+    let mut v: Vec<Vec<usize>> = vec![vec![0; r.len()]; r.len()];
+    for i in 0..r.len() {
+        v[i][i] = 1;
+    }
     let mut i: usize = 0;
     while x != 0 {
         if 1usize << i & x != 0 {

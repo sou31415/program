@@ -1,23 +1,33 @@
 #![allow(unused_imports)]
 use itertools::Itertools;
-use superslice::Ext;
 use petgraph::unionfind::UnionFind;
 use proconio::{fastout, input, marker::Chars, marker::Usize1, source::line::LineSource};
-use std::cmp::{max, min , Reverse};
+use std::cmp::{max, min, Reverse};
 use std::collections::{BTreeSet, HashSet, VecDeque};
 use std::io::{stdin, stdout, BufReader};
+use superslice::Ext;
 #[fastout]
 fn main() {
     let yes = String::from("Yes");
     let no = String::from("No");
     input! {
+        n:usize,
+        s:Chars,
+    }
+    let mut a: usize = 0;
+    for i in 0..s.len() {
+        a |= 1usize << ((s[i] as usize) - 'A' as usize);
+        if a == 7 {
+            println!("{}", i + 1);
+            return;
+        }
+    }
 }
 pub fn ziparam(a: usize, b: usize) -> usize {
     // |a:usize - b:usize| -> usize
     return max(a, b) - min(a, b);
 }
-
-pub fn matrix_pow(mut r: Vec<Vec<usize>>, m: usize, mut x: usize) -> Vec<Vec<usize>> {
+pub fn matrix_pow(mut r: Vec<Vec<usize>>, a: usize, m: usize, mut x: usize) -> Vec<Vec<usize>> {
     let mut v: Vec<Vec<usize>> = vec![vec![0; r.len()]; r.len()];
     for i in 0..r.len() {
         v[i][i] = 1;
@@ -26,9 +36,9 @@ pub fn matrix_pow(mut r: Vec<Vec<usize>>, m: usize, mut x: usize) -> Vec<Vec<usi
     while x != 0 {
         if 1usize << i & x != 0 {
             let mut d: Vec<Vec<usize>> = vec![vec![0, 0], vec![0, 0]];
-            for i in 0..r.len() {
-                for j in 0..r.len() {
-                    for k in 0..r.len() {
+            for i in 0..2 {
+                for j in 0..2 {
+                    for k in 0..2 {
                         d[i][j] += v[i][k] * r[k][j];
                         d[i][j] %= m;
                     }
@@ -38,9 +48,9 @@ pub fn matrix_pow(mut r: Vec<Vec<usize>>, m: usize, mut x: usize) -> Vec<Vec<usi
             v = d;
         }
         let mut d: Vec<Vec<usize>> = vec![vec![0, 0], vec![0, 0]];
-        for i in 0..r.len() {
-            for k in 0..r.len() {
-                for j in 0..r.len() {
+        for i in 0..2 {
+            for k in 0..2 {
+                for j in 0..2 {
                     d[i][j] += r[i][k] * r[k][j];
                     d[i][j] %= m;
                 }
@@ -125,5 +135,3 @@ pub fn rotate_diff(q: String) -> usize {
     }
     result
 }
-
-
