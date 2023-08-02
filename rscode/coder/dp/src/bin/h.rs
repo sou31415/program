@@ -5,15 +5,23 @@ fn main() {
         h:usize,w:usize,
         s:[Chars;h],
     }
+    let mut f = false;
+    let mut d = false;
     let mut dp: Vec<Vec<usize>> = vec![vec![0; w]; h];
     for i in 0..w {
-        if s[0][i] == '.' {
+        if s[0][i] == '#' {
+            f = true;
+        }
+        if s[0][i] == '.' && !f {
             dp[0][i] = 1;
         }
     }
     let m: usize = 1000000007;
     for i in 0..h {
-        if s[i][0] == '.' {
+        if s[i][0] == '#' {
+            d = true;
+        }
+        if s[i][0] == '.' && !d {
             dp[i][0] = 1;
         }
     }

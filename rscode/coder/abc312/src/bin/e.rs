@@ -1,58 +1,23 @@
 #![allow(unused_imports)]
 use itertools::Itertools;
+use superslice::Ext;
 use petgraph::unionfind::UnionFind;
 use proconio::{fastout, input, marker::Chars, marker::Usize1, source::line::LineSource};
-use std::cmp::{max, min, Reverse};
+use std::cmp::{max, min , Reverse};
 use std::collections::{BTreeSet, HashSet, VecDeque};
 use std::io::{stdin, stdout, BufReader};
-use superslice::Ext;
 #[fastout]
 fn main() {
     let yes = String::from("Yes");
     let no = String::from("No");
     input! {
-        n:usize,
-        a:[Usize1;n]
-    }
-    let mut p: usize = 0;
-    let mut uf = UnionFind::new(n);
-    let mut g: Vec<Vec<usize>> = vec![vec![]; n];
-    for i in 0..n {
-        if !uf.union(i, a[i]) {
-            p = i;
-        }
-        g[i].push(a[i]);
-    }
-    let q = dfs2(n, p, &mut g);
-    println!("{}", q.len());
-    println!("{}", q.iter().map(|&x| x + 1).join(" "));
-}
-
-fn dfs2(n: usize, p: usize, g: &mut Vec<Vec<usize>>) -> Vec<usize> {
-    let mut stack: Vec<usize> = vec![];
-    let mut d: Vec<usize> = vec![];
-    let mut seen = vec![false; n];
-    while let Some(x) = g[p].pop() {
-        stack.push(x);
-        d.push(x);
-    }
-    while let Some(x) = stack.pop() {
-        while let Some(y) = g[x].pop() {
-            if seen[y] {
-                break;
-            }
-            d.push(y);
-            stack.push(y);
-            seen[y] = true;
-        }
-    }
-    d
 }
 pub fn ziparam(a: usize, b: usize) -> usize {
     // |a:usize - b:usize| -> usize
     return max(a, b) - min(a, b);
 }
-pub fn matrix_pow(mut r: Vec<Vec<usize>>, a: usize, m: usize, mut x: usize) -> Vec<Vec<usize>> {
+
+pub fn matrix_pow(mut r: Vec<Vec<usize>>, m: usize, mut x: usize) -> Vec<Vec<usize>> {
     let mut v: Vec<Vec<usize>> = vec![vec![0; r.len()]; r.len()];
     for i in 0..r.len() {
         v[i][i] = 1;
@@ -61,9 +26,9 @@ pub fn matrix_pow(mut r: Vec<Vec<usize>>, a: usize, m: usize, mut x: usize) -> V
     while x != 0 {
         if 1usize << i & x != 0 {
             let mut d: Vec<Vec<usize>> = vec![vec![0, 0], vec![0, 0]];
-            for i in 0..2 {
-                for j in 0..2 {
-                    for k in 0..2 {
+            for i in 0..r.len() {
+                for j in 0..r.len() {
+                    for k in 0..r.len() {
                         d[i][j] += v[i][k] * r[k][j];
                         d[i][j] %= m;
                     }
@@ -73,9 +38,9 @@ pub fn matrix_pow(mut r: Vec<Vec<usize>>, a: usize, m: usize, mut x: usize) -> V
             v = d;
         }
         let mut d: Vec<Vec<usize>> = vec![vec![0, 0], vec![0, 0]];
-        for i in 0..2 {
-            for k in 0..2 {
-                for j in 0..2 {
+        for i in 0..r.len() {
+            for k in 0..r.len() {
+                for j in 0..r.len() {
                     d[i][j] += r[i][k] * r[k][j];
                     d[i][j] %= m;
                 }
@@ -160,3 +125,5 @@ pub fn rotate_diff(q: String) -> usize {
     }
     result
 }
+
+

@@ -11,48 +11,59 @@ fn main() {
     let yes = String::from("Yes");
     let no = String::from("No");
     input! {
-        n:usize,
-        a:[Usize1;n]
+        n:usize,m:usize,
+        mut a:[usize;n],
+        mut b:[usize;m]
     }
-    let mut p: usize = 0;
-    let mut uf = UnionFind::new(n);
-    let mut g: Vec<Vec<usize>> = vec![vec![]; n];
+    let mut cnt: usize = std::usize::MAX;
+    let mut r = a.clone();
+    let mut l = b.clone();
+    r.sort();
+    r.dedup();
+    l.sort();
+    l.dedup();
+    let mut x = vec![0usize; r.len()];
+    let mut y = vec![0usize; l.len()];
     for i in 0..n {
-        if !uf.union(i, a[i]) {
-            p = i;
+        if let Ok(s) = r.binary_search(&a[i]) {
+            x[s] += 1;
         }
-        g[i].push(a[i]);
     }
-    let q = dfs2(n, p, &mut g);
-    println!("{}", q.len());
-    println!("{}", q.iter().map(|&x| x + 1).join(" "));
-}
-
-fn dfs2(n: usize, p: usize, g: &mut Vec<Vec<usize>>) -> Vec<usize> {
-    let mut stack: Vec<usize> = vec![];
-    let mut d: Vec<usize> = vec![];
-    let mut seen = vec![false; n];
-    while let Some(x) = g[p].pop() {
-        stack.push(x);
-        d.push(x);
+    for i in 1..x.len() {
+        x[i] += x[i - 1];
     }
-    while let Some(x) = stack.pop() {
-        while let Some(y) = g[x].pop() {
-            if seen[y] {
-                break;
+    for i in 0..m {
+        if let Ok(s) = l.binary_search(&b[i]) {
+            y[s] += 1;
+        }
+    }
+    for i in (0..y.len() - 1).rev() {
+        y[i] += y[i + 1];
+    }
+    for i in 0..y.len() {
+        if let Ok(d) = x.binary_search(&y[i]) {
+            println!("{} a", max(r[d], l[i]));
+            return;
+        } else if let Err(d) = x.binary_search(&y[i]) {
+            if d == x.len() {
+                if x[d - 1] >= y[i] {
+                    cnt = min(cnt, x[d - 1] + 1);
+                }
+            } else {
+                if x[d] >= y[i] {
+                    cnt = min(cnt, min(r[d], l[i]));
+                }
             }
-            d.push(y);
-            stack.push(y);
-            seen[y] = true;
         }
     }
-    d
+    println!("{}", cnt);
 }
 pub fn ziparam(a: usize, b: usize) -> usize {
     // |a:usize - b:usize| -> usize
     return max(a, b) - min(a, b);
 }
-pub fn matrix_pow(mut r: Vec<Vec<usize>>, a: usize, m: usize, mut x: usize) -> Vec<Vec<usize>> {
+
+pub fn matrix_pow(mut r: Vec<Vec<usize>>, m: usize, mut x: usize) -> Vec<Vec<usize>> {
     let mut v: Vec<Vec<usize>> = vec![vec![0; r.len()]; r.len()];
     for i in 0..r.len() {
         v[i][i] = 1;
@@ -61,9 +72,9 @@ pub fn matrix_pow(mut r: Vec<Vec<usize>>, a: usize, m: usize, mut x: usize) -> V
     while x != 0 {
         if 1usize << i & x != 0 {
             let mut d: Vec<Vec<usize>> = vec![vec![0, 0], vec![0, 0]];
-            for i in 0..2 {
-                for j in 0..2 {
-                    for k in 0..2 {
+            for i in 0..r.len() {
+                for j in 0..r.len() {
+                    for k in 0..r.len() {
                         d[i][j] += v[i][k] * r[k][j];
                         d[i][j] %= m;
                     }
@@ -73,9 +84,9 @@ pub fn matrix_pow(mut r: Vec<Vec<usize>>, a: usize, m: usize, mut x: usize) -> V
             v = d;
         }
         let mut d: Vec<Vec<usize>> = vec![vec![0, 0], vec![0, 0]];
-        for i in 0..2 {
-            for k in 0..2 {
-                for j in 0..2 {
+        for i in 0..r.len() {
+            for k in 0..r.len() {
+                for j in 0..r.len() {
                     d[i][j] += r[i][k] * r[k][j];
                     d[i][j] %= m;
                 }
