@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 polars = { version = "0.25.1", features=["describe", "lazy","object", "strings","dtype-categorical","list_eval","rows","round_series", "dtype-full", "rank"] }
+regex = "1.9.1"
