@@ -27,7 +27,8 @@
       },
       "externalBin": [],
       "icon": [
-        "icons/icon.png"
+        "./icons/icon.png",
+		"./icons/icon.icns"
       ],
       "identifier": "com.RuSwiftive.tauri",
       "longDescription": "",
