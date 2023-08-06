@@ -16,7 +16,9 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-
+p {
+  font-size: 20px;
+}
 .container {
   margin: 0;
   padding-top: 10vh;
@@ -71,7 +73,11 @@ button {
 }
 
 button {
+  padding: 10px;
+  width:70px;
+  height:70px;
   cursor: pointer;
+  margin: 10px;
 }
 
 button:hover {

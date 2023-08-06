@@ -1,30 +1,12 @@
-#![allow(unused_imports)]
-use serde::{Deserialize, Serialize};
-use serde_wasm_bindgen::to_value;
-use wasm_bindgen::prelude::*;
-use wasm_bindgen_futures::spawn_local;
 use yew::prelude::*;
 
-#[wasm_bindgen]
-extern "C" {
-    #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "tauri"])]
-    async fn invoke(cmd: &str, args: JsValue) -> JsValue;
-
-    #[wasm_bindgen(js_namespace = console)]
-    fn log(s: &str);
-}
-
-#[derive(Serialize, Deserialize)]
-struct GreetArgs<'a> {
-    name: &'a str,
-}
 #[allow(unused_assignments)]
 #[allow(non_snake_case)]
 #[function_component(App)]
 pub fn app() -> Html {
     let counter = use_state(|| 0isize);
     let a = use_state(|| 0isize);
-    let mut mode: isize = 0; //0:足し算,1:引き算,2:掛け算,3:割り算,4:None
+    let mode = use_state(|| 0isize);
     let AppendButton1 = {
         let counter = counter.clone();
         move |_: MouseEvent| {
@@ -97,9 +79,10 @@ pub fn app() -> Html {
     };
     let PlusButton = {
         let counter = counter.clone();
-        mode = 0;
+        let mode = mode.clone();
         let a = a.clone();
         move |_: MouseEvent| {
+            mode.set(0);
             a.set(*counter.clone());
             let value = 0isize;
             counter.set(value);
@@ -108,9 +91,10 @@ pub fn app() -> Html {
 
     let SubButton = {
         let counter = counter.clone();
-        mode = 1;
+        let mode = mode.clone();
         let a = a.clone();
         move |_: MouseEvent| {
+            mode.set(1);
             a.set(*counter.clone());
             let value = 0isize;
             counter.set(value);
@@ -119,9 +103,10 @@ pub fn app() -> Html {
 
     let MulButton = {
         let counter = counter.clone();
-        mode = 2;
+        let mode = mode.clone();
         let a = a.clone();
         move |_: MouseEvent| {
+            mode.set(2);
             a.set(*counter.clone());
             let value = 0isize;
             counter.set(value);
@@ -129,9 +114,21 @@ pub fn app() -> Html {
     };
     let DivButton = {
         let counter = counter.clone();
-        mode = 3;
+        let mode = mode.clone();
         let a = a.clone();
         move |_: MouseEvent| {
+            mode.set(3);
+            a.set(*counter.clone());
+            let value = 0isize;
+            counter.set(value);
+        }
+    };
+    let ModButton = {
+        let counter = counter.clone();
+        let mode = mode.clone();
+        let a = a.clone();
+        move |_: MouseEvent| {
+            mode.set(4);
             a.set(*counter.clone());
             let value = 0isize;
             counter.set(value);
@@ -140,61 +137,102 @@ pub fn app() -> Html {
     let ExeButton = {
         let counter = counter.clone();
         let a = a.clone();
+        let mode = mode.clone();
         move |_: MouseEvent| {
-            if mode == 0 {
+            if *mode == 0 {
                 let value = *a + *counter;
                 counter.set(value);
                 a.set(0);
-            } else if mode == 1 {
+            } else if *mode == 1 {
                 let value = *a - *counter;
                 counter.set(value);
                 a.set(0);
-            } else if mode == 2 {
+            } else if *mode == 2 {
                 let value = *a * *counter;
                 counter.set(value);
                 a.set(0);
-            } else {
+            } else if *mode == 3 {
                 let value = *a / *counter;
                 counter.set(value);
                 a.set(0);
+            } else {
+                let value = *a % *counter;
+                counter.set(value);
+                a.set(0);
             }
+            mode.set(0);
         }
     };
 
     let ClsButton = {
         let counter = counter.clone();
-        mode = 0;
+        let mode = mode.clone();
         let a = a.clone();
         move |_: MouseEvent| {
+            mode.set(0);
             a.set(0);
             let value = 0isize;
             counter.set(value);
         }
     };
+
+    let RtButton = {
+        let counter = counter.clone();
+        move |_: MouseEvent| {
+            let mut a: isize = 1;
+            let mut b: isize = *counter;
+            while b - a > 1 {
+                let d = (a + b) / 2;
+                if d * d > *counter {
+                    b = d;
+                } else {
+                    a = d;
+                }
+            }
+            counter.set(a);
+        }
+    };
+    let SquareButton = {
+        let counter = counter.clone();
+        move |_: MouseEvent| {
+            let r = *counter * *counter;
+            counter.set(r);
+        }
+    };
+    let FactorialButton = {
+        let counter = counter.clone();
+        move |_: MouseEvent| {
+            let s = (1..=*counter).fold(1, |f, x| f * x);
+            counter.set(s);
+        }
+    };
     html! {
         <div>
-            <p><b>{ *a }</b></p>
-            <p><b>{ *counter }</b></p>
             <br/>
+            <p><b>{ *counter }</b></p>
             <button onclick={AppendButton1}>{"1"}</button>
             <button onclick={AppendButton2}>{"2"}</button>
             <button onclick={AppendButton3}>{"3"}</button>
             <button onclick={PlusButton}>{"+"}</button>
+            <button onclick={RtButton}>{"√"}</button>
             <br/>
             <button onclick={AppendButton4}>{"4"}</button>
             <button onclick={AppendButton5}>{"5"}</button>
             <button onclick={AppendButton6}>{"6"}</button>
             <button onclick={SubButton}>{"-"}</button>
+            <button onclick={FactorialButton}>{"x!"}</button>
             <br/>
             <button onclick={AppendButton7}>{"7"}</button>
             <button onclick={AppendButton8}>{"8"}</button>
             <button onclick={AppendButton9}>{"9"}</button>
             <button onclick={MulButton}>{"×"}</button>
+            <button onclick={SquareButton}>{"x^2"}</button>
             <br/>
             <button onclick={ClsButton}>{"C"}</button>
             <button onclick={AppendButton0}>{"0"}</button>
             <button onclick={ExeButton}>{"="}</button>
             <button onclick={DivButton}>{"÷"}</button>
+            <button onclick={ModButton}>{"%"}</button>
             <br/>
         </div>
     }
