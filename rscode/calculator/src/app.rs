@@ -1,3 +1,4 @@
+#![allow(unused_imports)]
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::to_value;
 use wasm_bindgen::prelude::*;
@@ -17,80 +18,184 @@ extern "C" {
 struct GreetArgs<'a> {
     name: &'a str,
 }
-
+#[allow(unused_assignments)]
+#[allow(non_snake_case)]
 #[function_component(App)]
 pub fn app() -> Html {
-    let greet_input_ref = use_node_ref();
-
-    let name = use_state(|| String::new());
-
-    let greet_msg = use_state(|| String::new());
-    {
-        let greet_msg = greet_msg.clone();
-        let name = name.clone();
-        let name2 = name.clone();
-        use_effect_with_deps(
-            move |_| {
-                spawn_local(async move {
-                    if name.is_empty() {
-                        return;
-                    }
-
-                    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-                    let new_msg =
-                        invoke("greet", to_value(&GreetArgs { name: &*name }).unwrap()).await;
-                    log(&new_msg.as_string().unwrap());
-                    greet_msg.set(new_msg.as_string().unwrap());
-                });
-
-                || {}
-            },
-            name2,
-        );
-    }
-
-    let greet = {
-        let name = name.clone();
-        let greet_input_ref = greet_input_ref.clone();
-        Callback::from(move |e: SubmitEvent| {
-            e.prevent_default();
-            name.set(
-                greet_input_ref
-                    .cast::<web_sys::HtmlInputElement>()
-                    .unwrap()
-                    .value(),
-            );
-        })
+    let counter = use_state(|| 0isize);
+    let a = use_state(|| 0isize);
+    let mut mode: isize = 0; //0:足し算,1:引き算,2:掛け算,3:割り算,4:None
+    let AppendButton1 = {
+        let counter = counter.clone();
+        move |_: MouseEvent| {
+            let value = *counter * 10 + 1;
+            counter.set(value);
+        }
+    };
+    let AppendButton2 = {
+        let counter = counter.clone();
+        move |_: MouseEvent| {
+            let value = *counter.clone() * 10 + 2;
+            counter.set(value);
+        }
+    };
+    let AppendButton3 = {
+        let counter = counter.clone();
+        move |_: MouseEvent| {
+            let value = *counter.clone() * 10 + 3;
+            counter.set(value);
+        }
+    };
+    let AppendButton4 = {
+        let counter = counter.clone();
+        move |_: MouseEvent| {
+            let value = *counter.clone() * 10 + 4;
+            counter.set(value);
+        }
+    };
+    let AppendButton5 = {
+        let counter = counter.clone();
+        move |_: MouseEvent| {
+            let value = *counter.clone() * 10 + 5;
+            counter.set(value);
+        }
+    };
+    let AppendButton6 = {
+        let counter = counter.clone();
+        move |_: MouseEvent| {
+            let value = *counter.clone() * 10 + 6;
+            counter.set(value);
+        }
+    };
+    let AppendButton7 = {
+        let counter = counter.clone();
+        move |_: MouseEvent| {
+            let value = *counter.clone() * 10 + 7;
+            counter.set(value);
+        }
+    };
+    let AppendButton8 = {
+        let counter = counter.clone();
+        move |_: MouseEvent| {
+            let value = *counter.clone() * 10 + 8;
+            counter.set(value);
+        }
+    };
+    let AppendButton9 = {
+        let counter = counter.clone();
+        move |_: MouseEvent| {
+            let value = *counter.clone() * 10 + 9;
+            counter.set(value);
+        }
+    };
+    let AppendButton0 = {
+        let counter = counter.clone();
+        move |_: MouseEvent| {
+            let value = *counter.clone() * 10;
+            counter.set(value);
+        }
+    };
+    let PlusButton = {
+        let counter = counter.clone();
+        mode = 0;
+        let a = a.clone();
+        move |_: MouseEvent| {
+            a.set(*counter.clone());
+            let value = 0isize;
+            counter.set(value);
+        }
     };
 
+    let SubButton = {
+        let counter = counter.clone();
+        mode = 1;
+        let a = a.clone();
+        move |_: MouseEvent| {
+            a.set(*counter.clone());
+            let value = 0isize;
+            counter.set(value);
+        }
+    };
+
+    let MulButton = {
+        let counter = counter.clone();
+        mode = 2;
+        let a = a.clone();
+        move |_: MouseEvent| {
+            a.set(*counter.clone());
+            let value = 0isize;
+            counter.set(value);
+        }
+    };
+    let DivButton = {
+        let counter = counter.clone();
+        mode = 3;
+        let a = a.clone();
+        move |_: MouseEvent| {
+            a.set(*counter.clone());
+            let value = 0isize;
+            counter.set(value);
+        }
+    };
+    let ExeButton = {
+        let counter = counter.clone();
+        let a = a.clone();
+        move |_: MouseEvent| {
+            if mode == 0 {
+                let value = *a + *counter;
+                counter.set(value);
+                a.set(0);
+            } else if mode == 1 {
+                let value = *a - *counter;
+                counter.set(value);
+                a.set(0);
+            } else if mode == 2 {
+                let value = *a * *counter;
+                counter.set(value);
+                a.set(0);
+            } else {
+                let value = *a / *counter;
+                counter.set(value);
+                a.set(0);
+            }
+        }
+    };
+
+    let ClsButton = {
+        let counter = counter.clone();
+        mode = 0;
+        let a = a.clone();
+        move |_: MouseEvent| {
+            a.set(0);
+            let value = 0isize;
+            counter.set(value);
+        }
+    };
     html! {
-        <main class="container">
-            <div class="row">
-                <a href="https://tauri.app" target="_blank">
-                    <img src="public/tauri.svg" class="logo tauri" alt="Tauri logo"/>
-                </a>
-                <a href="https://yew.rs" target="_blank">
-                    <img src="public/yew.png" class="logo yew" alt="Yew logo"/>
-                </a>
-            </div>
-
-            <p>{"Click on the Tauri and Yew logos to learn more."}</p>
-
-            <p>
-                {"Recommended IDE setup: "}
-                <a href="https://code.visualstudio.com/" target="_blank">{"VS Code"}</a>
-                {" + "}
-                <a href="https://github.com/tauri-apps/tauri-vscode" target="_blank">{"Tauri"}</a>
-                {" + "}
-                <a href="https://github.com/rust-lang/rust-analyzer" target="_blank">{"rust-analyzer"}</a>
-            </p>
-
-            <form class="row" onsubmit={greet}>
-                <input id="greet-input" ref={greet_input_ref} placeholder="Enter a name..." />
-                <button type="submit">{"Greet"}</button>
-            </form>
-
-            <p><b>{ &*greet_msg }</b></p>
-        </main>
+        <div>
+            <p><b>{ *a }</b></p>
+            <p><b>{ *counter }</b></p>
+            <br/>
+            <button onclick={AppendButton1}>{"1"}</button>
+            <button onclick={AppendButton2}>{"2"}</button>
+            <button onclick={AppendButton3}>{"3"}</button>
+            <button onclick={PlusButton}>{"+"}</button>
+            <br/>
+            <button onclick={AppendButton4}>{"4"}</button>
+            <button onclick={AppendButton5}>{"5"}</button>
+            <button onclick={AppendButton6}>{"6"}</button>
+            <button onclick={SubButton}>{"-"}</button>
+            <br/>
+            <button onclick={AppendButton7}>{"7"}</button>
+            <button onclick={AppendButton8}>{"8"}</button>
+            <button onclick={AppendButton9}>{"9"}</button>
+            <button onclick={MulButton}>{"×"}</button>
+            <br/>
+            <button onclick={ClsButton}>{"C"}</button>
+            <button onclick={AppendButton0}>{"0"}</button>
+            <button onclick={ExeButton}>{"="}</button>
+            <button onclick={DivButton}>{"÷"}</button>
+            <br/>
+        </div>
     }
 }
